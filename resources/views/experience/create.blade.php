@@ -2,6 +2,52 @@
 
 @section('content')
     <div class="container py-4">
+        <div id="memo-container" class="memo-container">
+            <button id="memo-toggle" class="btn btn-primary memo-button" data-bs-toggle="collapse" data-bs-target="#memo-content">
+                <i class="bi bi-info-circle me-2"></i>Памятка
+            </button>
+            <div id="memo-content" class="memo-content collapse">
+                <h5>Как правильно заполнять резюме:</h5>
+                <ul>
+                    <li><strong>ФИО:</strong> Укажите ваше полное имя.</li>
+                    <li><strong>Контакты:</strong>
+                        <ul>
+                            <li>Телефон: действующий номер для связи.</li>
+                            <li>Email: актуальный адрес электронной почты.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Профессиональный опыт:</strong>
+                        <ul>
+                            <li>Укажите должность, название компании и период работы.</li>
+                            <li>Опишите обязанности общими словами, без лишних деталей.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Навыки:</strong>
+                        <ul>
+                            <li>Перечислите ключевые навыки.</li>
+                            <li>Укажите уровень владения иностранными языками.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Образование:</strong> Название учебного заведения и год окончания.</li>
+                    <li><strong>Зарплата, график, место работы:</strong>
+                        <ul>
+                            <li>Желаемая зарплата.</li>
+                            <li>График работы (полный день, удалённая работа и т.д.).</li>
+                            <li>Предпочтительное место работы.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Информация о себе:</strong> Краткое описание ваших профессиональных целей или личных качеств.</li>
+                    <li><strong>Проекты:</strong>
+                        <ul>
+                            <li>Название проекта.</li>
+                            <li>Ваша роль в проекте.</li>
+                            <li>Технологии, которые вы использовали.</li>
+                            <li>Ключевые особенности проекта.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div class="card">
             <div class="card-header">
                 <h1 class="h3">Добавить профессиональный опыт</h1>
@@ -121,7 +167,7 @@
                             </div>
                         </form>
                     </div>
-                    @endif
+                @endif
             </div>
         </div>
 
@@ -137,4 +183,3 @@
         @endif
     </div>
 @endsection
-

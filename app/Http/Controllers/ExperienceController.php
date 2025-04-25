@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Experience;
+use App\Models\Resume;
 use App\Services\AIService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Parsedown;
 
 class ExperienceController extends Controller
@@ -24,12 +26,24 @@ class ExperienceController extends Controller
             'projects' => 'nullable|string', // Добавляем валидацию
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
+            'avatar_url' => 'nullable|url'
         ]);
 
         auth()->user()->experiences()->create($validated);
 
         return redirect()->route('experience.create')
             ->with('success', 'Опыт успешно добавлены!');
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar_url' => 'required|url', // проверяем, что это корректный URL
+        ]);
+
+        auth()->user()->updateAvatarUrl($request->input('avatar_url'));
+
+        return back()->with('success', 'Ссылка на фото успешно сохранена');
     }
 
     /**
@@ -96,6 +110,8 @@ class ExperienceController extends Controller
             // Конвертируем Markdown в HTML (если нужно)
             $parsedown = new Parsedown();
             $resumeHtml = $parsedown->text($resume);
+
+            $avatarUrl = $experiences->first()->avatar_url;
             // Генерируем ссылки на вакансии
             // Получаем технологии из формы или из опыта
             $technologies = $request->input('technologies', []);
@@ -111,11 +127,25 @@ class ExperienceController extends Controller
             $pdf = Pdf::loadView($templateView, [
                 'resume' => $resumeHtml,
                 'jobLinks' => $jobLinks,
-                'technologies' => $technologies
+                'technologies' => $technologies,
+                'avatarUrl' => $avatarUrl
             ]);
 
-            $pdf->setOption('defaultFont', 'DejaVu Sans');
-            return $pdf->download('resume_'.date('Ymd_His').'.pdf');
+            $fileName = 'resume_'.date('Ymd_His').'.pdf';
+            $filePath = "resumes/{$fileName}";
+            $pdfContent = $pdf->output();
+            Storage::put($filePath, $pdfContent);
+
+            Resume::create([
+                'user_id' => auth()->id(),
+                'file_path' => $filePath,
+                'file_name' => $fileName
+            ]);
+
+            return response()->make($pdfContent, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="'.$fileName.'"'
+            ]);
         } catch (\Exception $e) {
             return redirect()->route('experience.create')
                 ->with('error', 'Ошибка генерации резюме: ' . $e->getMessage());

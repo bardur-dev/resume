@@ -14,6 +14,25 @@
                         <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
                     </li>
                 @else
+                    @if(auth()->check() && auth()->user()->isAdmin())
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-shield-lock me-1"></i> Админка
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.resumes.index') }}">
+                                        <i class="bi bi-file-earmark-pdf me-2"></i> Все резюме
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">
+                                        <i class="bi bi-people me-2"></i> Пользователи
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('experience.create') }}">Добавить опыт</a>
                     </li>

@@ -25,7 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'avatar_url'
     ];
 
     /**
@@ -50,8 +51,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function updateAvatarUrl($url)
+    {
+        $this->avatar_url = $url;
+        $this->save();
+    }
+
     public function experiences()
     {
         return $this->hasMany(Experience::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function resumes()
+    {
+        return $this->hasMany(Resume::class);
     }
 }

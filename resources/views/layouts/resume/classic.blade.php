@@ -110,13 +110,6 @@
         }
     </style>
 </head>
-@if(auth()->user()->avatar_url)
-    <div class="avatar-container">
-        <img src="{{ auth()->user()->avatar_url }}"
-             alt="Аватар"
-             class="avatar-img">
-    </div>
-@endif
 <body>
 {!! $resume !!}
 
