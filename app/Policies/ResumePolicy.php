@@ -16,9 +16,9 @@ class ResumePolicy
         return $user->isAdmin();
     }
 
-    public function view(User $admin, User $targetUser): bool
+    public function view(User $user, Resume $resume): bool
     {
-        return $admin->isAdmin();
+        return $user->isAdmin() || $resume->user_id === $user->id;
     }
 
     /**
@@ -32,9 +32,9 @@ class ResumePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $admin, User $targetUser): bool
+    public function update(User $user, Resume $resume): bool
     {
-        return $admin->isAdmin();
+        return $resume->user_id === $user->id; // Редактировать может владелец
     }
 
     public function download(User $user, Resume $resume): bool

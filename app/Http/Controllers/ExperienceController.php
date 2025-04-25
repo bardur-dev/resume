@@ -138,6 +138,7 @@ class ExperienceController extends Controller
 
             Resume::create([
                 'user_id' => auth()->id(),
+                'content' => $resume,
                 'file_path' => $filePath,
                 'file_name' => $fileName
             ]);

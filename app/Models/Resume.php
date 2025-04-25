@@ -9,7 +9,8 @@ class Resume extends Model
     protected $fillable = [
         'user_id',
         'file_path',
-        'file_name'
+        'file_name',
+        'content'
     ];
 
     public function user()

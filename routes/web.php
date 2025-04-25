@@ -7,6 +7,7 @@ use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\ResumeController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/resume/generate', [ExperienceController::class, 'generateResume'])->name('resume.generate');
     Route::delete('/experience/clear', [ExperienceController::class, 'clear'])->name('experience.clear');
     Route::post('/upload-avatar', [ExperienceController::class, 'updateAvatar'])->name('upload.avatar');
+    Route::get('/my-resumes', [ResumeController::class, 'index'])
+        ->name('user.resumes.index');
+    Route::get('/my-resumes/{resume}/edit', [ResumeController::class, 'edit'])
+        ->name('user.resumes.edit');
+    Route::put('/my-resumes/{resume}', [ResumeController::class, 'update'])
+        ->name('user.resumes.update');
 
     Route::prefix('admin')->group(function () {
         Route::get('/resumes', [AdminResumeController::class, 'index'])

@@ -39,6 +39,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('resume.generate') }}">Генерировать резюме</a>
                     </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('user.resumes.index') }}">
+                                <i class="bi bi-file-earmark-text"></i> Мои резюме
+                            </a>
+                        </li>
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
