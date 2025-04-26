@@ -35,16 +35,6 @@ class ExperienceController extends Controller
             ->with('success', 'Опыт успешно добавлены!');
     }
 
-    public function updateAvatar(Request $request)
-    {
-        $request->validate([
-            'avatar_url' => 'required|url', // проверяем, что это корректный URL
-        ]);
-
-        auth()->user()->updateAvatarUrl($request->input('avatar_url'));
-
-        return back()->with('success', 'Ссылка на фото успешно сохранена');
-    }
 
     /**
      * Генерирует умные ссылки на вакансии
@@ -111,7 +101,6 @@ class ExperienceController extends Controller
             $parsedown = new Parsedown();
             $resumeHtml = $parsedown->text($resume);
 
-            $avatarUrl = $experiences->first()->avatar_url;
             // Генерируем ссылки на вакансии
             // Получаем технологии из формы или из опыта
             $technologies = $request->input('technologies', []);
@@ -127,8 +116,7 @@ class ExperienceController extends Controller
             $pdf = Pdf::loadView($templateView, [
                 'resume' => $resumeHtml,
                 'jobLinks' => $jobLinks,
-                'technologies' => $technologies,
-                'avatarUrl' => $avatarUrl
+                'technologies' => $technologies
             ]);
 
             $fileName = 'resume_'.date('Ymd_His').'.pdf';

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\AdminPromptController;
 use App\Http\Controllers\AdminResumeController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AvatarController;
@@ -59,6 +60,13 @@ Route::middleware('auth')->group(function () {
 
         Route::put('/users/{user}', [AdminUserController::class, 'update'])
             ->name('admin.users.update');
+        Route::get('/prompts', [AdminPromptController::class, 'edit'])
+            ->name('admin.prompts.edit')
+            ->middleware('can:edit-prompt'); // Защита политикой
+
+        Route::put('/prompts', [AdminPromptController::class, 'update'])
+            ->name('admin.prompts.update')
+            ->middleware('can:edit-prompt');
     });
 
 });

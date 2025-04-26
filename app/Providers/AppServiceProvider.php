@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Resume;
 use App\Models\User;
+use App\Policies\PromptPolicy;
 use App\Policies\ResumePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Resume::class, ResumePolicy::class);
+        Gate::define('edit-prompt', [PromptPolicy::class, 'edit']);
     }
 }

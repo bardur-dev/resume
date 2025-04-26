@@ -52,11 +52,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function updateAvatarUrl($url)
-    {
-        $this->avatar_url = $url;
-        $this->save();
-    }
 
     public function experiences()
     {

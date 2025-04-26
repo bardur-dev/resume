@@ -30,6 +30,11 @@
                                         <i class="bi bi-people me-2"></i> Пользователи
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.prompts.edit') }}">
+                                        <i class="bi bi-people me-2"></i> Редактировать промпт
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @endif
